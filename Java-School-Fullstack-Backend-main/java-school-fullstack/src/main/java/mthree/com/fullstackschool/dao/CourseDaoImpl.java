@@ -22,9 +22,11 @@ public class CourseDaoImpl implements CourseDao {
     @Override
     public Course createNewCourse(Course course) {
         //YOUR CODE STARTS HERE
-
-
-        return null;
+        final String INSERT_COURSE = "INSERT INTO course(courseCode, courseDesc) VALUES(?,?)";
+        jdbcTemplate.update(INSERT_COURSE, course.getCourseName(), course.getCourseDesc());
+        int newId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+        course.setCourseId(newId);
+        return course;
 
         //YOUR CODE ENDS HERE
     }

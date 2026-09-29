@@ -22,9 +22,12 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public Teacher createNewTeacher(Teacher teacher) {
         //YOUR CODE STARTS HERE
-
-        return null;
-
+        final String INSERT_TEACHER = "INSERT INTO teacher(tFName, tLName, dept) VALUES(?,?,?)";
+        jdbcTemplate.update(INSERT_TEACHER,
+                teacher.getTeacherFName(),
+                teacher.getTeacherLName(),
+                teacher.getDept());
+        return teacher;
         //YOUR CODE ENDS HERE
     }
 
@@ -48,16 +51,21 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public void updateTeacher(Teacher t) {
         //YOUR CODE STARTS HERE
-
-
+        final String UPDATE_TEACHER = "UPDATE teacher SET tFName = ?, tLName = ?, dept = ? " +
+                "WHERE tid = ?";
+        jdbcTemplate.update(UPDATE_TEACHER,
+                t.getTeacherFName(),
+                t.getTeacherLName(),
+                t.getDept(),
+                t.getTeacherId());
         //YOUR CODE ENDS HERE
     }
 
     @Override
     public void deleteTeacher(int id) {
         //YOUR CODE STARTS HERE
-
-
+        final String DELETE_TEACHER = "DELETE FROM teacher WHERE tid = ?";
+        jdbcTemplate.update(DELETE_TEACHER, id);
         //YOUR CODE ENDS HERE
     }
 }
