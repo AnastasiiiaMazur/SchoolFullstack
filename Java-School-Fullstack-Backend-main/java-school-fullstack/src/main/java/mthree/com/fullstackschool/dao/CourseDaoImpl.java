@@ -22,12 +22,12 @@ public class CourseDaoImpl implements CourseDao {
     @Override
     public Course createNewCourse(Course course) {
         //YOUR CODE STARTS HERE
-        final String INSERT_COURSE = "INSERT INTO course(courseCode, courseDesc) VALUES(?,?)";
-        jdbcTemplate.update(INSERT_COURSE, course.getCourseName(), course.getCourseDesc());
-        int newId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
-        course.setCourseId(newId);
+        final String INSERT_COURSE = "INSERT INTO course(courseCode, courseDesc, teacherId) VALUES(?,?,?)";
+        jdbcTemplate.update(INSERT_COURSE,
+                course.getCourseName(),
+                course.getCourseDesc(),
+                course.getTeacherId());
         return course;
-
         //YOUR CODE ENDS HERE
     }
 
@@ -50,27 +50,28 @@ public class CourseDaoImpl implements CourseDao {
     @Override
     public void updateCourse(Course course) {
         //YOUR CODE STARTS HERE
-
-
-
+        final String UPDATE_COURSE = "UPDATE course SET courseCode = ?, courseDesc = ?, teacherId = ? WHERE cid = ?";
+        jdbcTemplate.update(UPDATE_COURSE,
+                course.getCourseName(),
+                course.getCourseDesc(),
+                course.getTeacherId(),
+                course.getCourseId());
         //YOUR CODE ENDS HERE
     }
 
     @Override
     public void deleteCourse(int id) {
         //YOUR CODE STARTS HERE
-
-
-
+        final String DELETE_COURSE = "DELETE FROM course WHERE cid = ?";
+        jdbcTemplate.update(DELETE_COURSE, id);
         //YOUR CODE ENDS HERE
     }
 
     @Override
     public void deleteAllStudentsFromCourse(int courseId) {
         //YOUR CODE STARTS HERE
-
-
-
+        final String DELETE_STUDENTS_FROM_COURSE = "DELETE FROM course_student WHERE course_id = ?";
+        jdbcTemplate.update(DELETE_STUDENTS_FROM_COURSE, courseId);
         //YOUR CODE ENDS HERE
     }
 }
