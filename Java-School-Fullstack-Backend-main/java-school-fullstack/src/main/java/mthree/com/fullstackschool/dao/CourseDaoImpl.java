@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 @Repository
 public class CourseDaoImpl implements CourseDao {
@@ -31,19 +32,16 @@ public class CourseDaoImpl implements CourseDao {
     @Override
     public List<Course> getAllCourses() {
         //YOUR CODE STARTS HERE
-
-
-        return null;
-
+        final String GET_ALL_COURSES = "SELECT * FROM course";
+        return jdbcTemplate.query(GET_ALL_COURSES, new CourseMapper());
         //YOUR CODE ENDS HERE
     }
 
     @Override
     public Course findCourseById(int id) {
         //YOUR CODE STARTS HERE
-
-        return null;
-
+        final String GET_COURSE_BY_ID = "SELECT * FROM course WHERE cid = ?";
+        return jdbcTemplate.queryForObject(GET_COURSE_BY_ID, new CourseMapper(), id);
         //YOUR CODE ENDS HERE
     }
 

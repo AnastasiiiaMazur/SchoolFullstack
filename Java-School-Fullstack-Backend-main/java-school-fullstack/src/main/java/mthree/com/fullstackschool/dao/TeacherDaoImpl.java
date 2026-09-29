@@ -31,17 +31,16 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public List<Teacher> getAllTeachers() {
         //YOUR CODE STARTS HERE
-
-        return null;
-
+        final String GET_ALL_TEACHERS = "SELECT * FROM teacher";
+        return jdbcTemplate.query(GET_ALL_TEACHERS, new TeacherMapper());
         //YOUR CODE ENDS HERE
     }
 
     @Override
     public Teacher findTeacherById(int id) {
         //YOUR CODE STARTS HERE
-
-        return null;
+        final String GET_TEACHER_BY_ID = "SELECT * FROM teacher WHERE tid = ?";
+        return jdbcTemplate.queryForObject(GET_TEACHER_BY_ID, new TeacherMapper(), id);
 
         //YOUR CODE ENDS HERE
     }
