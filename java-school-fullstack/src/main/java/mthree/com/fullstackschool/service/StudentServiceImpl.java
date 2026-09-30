@@ -15,6 +15,9 @@ public class StudentServiceImpl implements StudentServiceInterface {
     private StudentDao studentDao;
 
     @Autowired
+    private CourseServiceInterface courseService;
+
+    @Autowired
     public StudentServiceImpl(StudentDao studentDao) {
         this.studentDao = studentDao;
     }
@@ -72,14 +75,41 @@ public class StudentServiceImpl implements StudentServiceInterface {
 
     public void deleteStudentFromCourse(int studentId, int courseId) {
         //YOUR CODE STARTS HERE
+        Student student = getStudentById(studentId);
+        Course course = courseService.getCourseById(courseId);
 
+        if (student.getStudentFirstName().equals("Student Not Found")) {
+            System.out.println("Student not found");
+
+        } else if (course.getCourseName().equals("Course Not Found")) {
+            System.out.println("Course not found");
+
+        } else {
+            studentDao.deleteStudentFromCourse(studentId, courseId);
+            System.out.println("Student: " + studentId + " deleted from course: " + courseId);
+        }
         //YOUR CODE ENDS HERE
     }
 
     public void addStudentToCourse(int studentId, int courseId) {
         //YOUR CODE STARTS HERE
+        Student student = getStudentById(studentId);
+        Course course = courseService.getCourseById(courseId);
 
+        if (student.getStudentFirstName().equals("Student Not Found")) {
+            System.out.println("Student not found");
 
+        } else if (course.getCourseName().equals("Course Not Found")) {
+            System.out.println("Course not found");
+
+        } else {
+            try {
+                studentDao.addStudentToCourse(studentId, courseId);
+                System.out.println("Student: " + studentId + " added to course: " + courseId);
+            } catch (DataAccessException ex) {
+                System.out.println("Student: " + studentId + " already enrolled in course: " + courseId);
+            }
+        }
         //YOUR CODE ENDS HERE
     }
 }
